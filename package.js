@@ -1,15 +1,15 @@
 Package.describe({
   summary: "Common code for OAuth-based login services in clinical environments.",
-  version: "1.1.20",
+  version: "1.1.21",
   name: 'clinical:accounts-oauth',
   git: 'https://github.com/clinical-meteor/accounts-oauth'
 });
 
 Package.onUse(function (api) {
   api.use('underscore@1.0.10', ['client', 'server']);
-  api.use('random@1.1.0', ['client', 'server']);
-  api.use('check@1.3.1', ['client', 'server']);
-  api.use('webapp@1.5.0', 'server');
+  api.use('random@1.0.10', ['client', 'server']);
+  api.use('check@1.2.5', ['client', 'server']);
+  api.use('webapp@1.4.0', 'server');
   api.use('accounts-base@1.4.2', ['client', 'server']);
 
   // Export Accounts (etc) to packages using this one.
