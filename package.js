@@ -14,7 +14,7 @@ Package.onUse(function (api) {
 
   // Export Accounts (etc) to packages using this one.
   api.imply('accounts-base', ['client', 'server']);
-  api.use('clinical:oauth@1.2.6');
+  api.use('clinical:oauth@1.2.8');
 
   api.addFiles('oauth_common.js');
   api.addFiles('oauth_client.js', 'client');
