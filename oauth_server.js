@@ -18,7 +18,7 @@ Accounts.registerLoginHandler(function (options) {
   var result = OAuth.retrieveCredential(options.oauth.credentialToken,
                                         options.oauth.credentialSecret);
 
-  process.env.TRACE && console.log('result', result)
+  process.env.TRACE && console.log('Accounts.registerLoginHandler().result', result)
 
   if (!result) {
     // OAuth credentialToken is not recognized, which could be either
