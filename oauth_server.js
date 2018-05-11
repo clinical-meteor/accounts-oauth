@@ -1,7 +1,7 @@
 // Listen to calls to `login` with an oauth option set. This is where
 // users actually get logged in to meteor via oauth.
 Accounts.registerLoginHandler(function (options) {
-  process.env.TRACE && console.log('Accounts.registerLoginHandler()', options);
+  process.env.DEBUG && console.log('Accounts.registerLoginHandler()', options);
 
   if (!options.oauth)
     return undefined; // don't handle
@@ -18,7 +18,7 @@ Accounts.registerLoginHandler(function (options) {
   var result = OAuth.retrieveCredential(options.oauth.credentialToken,
                                         options.oauth.credentialSecret);
 
-  process.env.TRACE && console.log('Accounts.registerLoginHandler().result', result)
+  process.env.DEBUG && console.log('Accounts.registerLoginHandler().result', result)
 
   if (!result) {
     // OAuth credentialToken is not recognized, which could be either
