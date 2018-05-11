@@ -46,7 +46,11 @@ Meteor.startup(function () {
   var methodName = 'login';
   var methodArguments = [{oauth: _.pick(oauth, 'credentialToken', 'credentialSecret')}];
 
-  Accounts.callLoginMethod({
+  if(get(Meteor, 'settings.public.logging') === "debug"){
+    console.log('OAuth._loginStyle', service, config, options)
+  }  
+
+  var newLoginMethod = {
     methodArguments: methodArguments,
     userCallback: function (err) {
       // The redirect login flow is complete.  Construct an
@@ -62,7 +66,9 @@ Meteor.startup(function () {
         methodArguments: methodArguments
       });
     }
-  });
+  };
+
+  Accounts.callLoginMethod(newLoginMethod);
 });
 
 
@@ -70,6 +76,7 @@ Meteor.startup(function () {
 // access in the popup this should log the user in, otherwise
 // nothing should happen.
 Accounts.oauth.tryLoginAfterPopupClosed = function(credentialToken, callback) {
+  
   process.env.TRACE && console.log('Accounts.oauth.tryLoginAfterPopupClosed', credentialToken)
   
   var credentialSecret = OAuth._retrieveCredentialSecret(credentialToken) || null;
