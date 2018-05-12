@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+
 Accounts.oauth = {};
 
 var services = {};
@@ -5,6 +7,10 @@ var services = {};
 // Helper for registering OAuth based accounts packages.
 // On the server, adds an index to the user collection.
 Accounts.oauth.registerService = function (name) {
+  if(get(Meteor, 'settings.public.logging') === "debug"){
+    console.log('Accounts.oauth.registerService', name)
+  }   
+
   if (_.has(services, name))
     throw new Error("Duplicate service: " + name);
   services[name] = true;

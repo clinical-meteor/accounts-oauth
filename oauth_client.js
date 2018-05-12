@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+
 // Documentation for Meteor.loginWithExternalService
 
 /**
@@ -68,6 +70,10 @@ Meteor.startup(function () {
     }
   };
 
+  if(get(Meteor, 'settings.public.logging') === "debug"){
+    console.log('Meteor.startup().newLoginMethod', newLoginMethod)
+  }  
+
   Accounts.callLoginMethod(newLoginMethod);
 });
 
@@ -76,8 +82,9 @@ Meteor.startup(function () {
 // access in the popup this should log the user in, otherwise
 // nothing should happen.
 Accounts.oauth.tryLoginAfterPopupClosed = function(credentialToken, callback) {
-  
-  process.env.TRACE && console.log('Accounts.oauth.tryLoginAfterPopupClosed', credentialToken)
+  if(get(Meteor, 'settings.public.logging') === "debug"){
+    console.log('Accounts.oauth.tryLoginAfterPopupClosed', credentialToken)
+  }   
   
   var credentialSecret = OAuth._retrieveCredentialSecret(credentialToken) || null;
   Accounts.callLoginMethod({
@@ -91,8 +98,10 @@ Accounts.oauth.tryLoginAfterPopupClosed = function(credentialToken, callback) {
 };
 
 Accounts.oauth.credentialRequestCompleteHandler = function(callback) {
-  process.env.TRACE && console.log('Accounts.oauth.credentialRequestCompleteHandler')
-  
+  if(get(Meteor, 'settings.public.logging') === "debug"){
+    console.log('Accounts.oauth.credentialRequestCompleteHandler')
+  }   
+
   return function (credentialTokenOrError) {
     if(credentialTokenOrError && credentialTokenOrError instanceof Error) {
       callback && callback(credentialTokenOrError);
