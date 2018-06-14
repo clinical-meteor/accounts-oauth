@@ -8,7 +8,7 @@ var services = {};
 // On the server, adds an index to the user collection.
 Accounts.oauth.registerService = function (name) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('Accounts.oauth.registerService', name)
+    console.log('C3      Registering OAuth service in active server memory:  ', name)
   }   
 
   if (_.has(services, name))

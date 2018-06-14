@@ -3,7 +3,7 @@ import { get } from 'lodash';
 // Listen to calls to `login` with an oauth option set. This is where
 // users actually get logged in to meteor via oauth.
 Accounts.registerLoginHandler(function (options) {
-  process.env.DEBUG && console.log('Accounts.registerLoginHandler()', options);
+  process.env.DEBUG && console.log('S21.1 Accounts.registerLoginHandler()', options);
 
   if (!options.oauth)
     return undefined; // don't handle
@@ -20,7 +20,7 @@ Accounts.registerLoginHandler(function (options) {
   var result = OAuth.retrieveCredential(options.oauth.credentialToken,
                                         options.oauth.credentialSecret);
 
-  process.env.DEBUG && console.log('Accounts.registerLoginHandler().result', result)
+  process.env.DEBUG && console.log('S21.2 Accounts.registerLoginHandler().result', result)
 
   if (!result) {
     // OAuth credentialToken is not recognized, which could be either
@@ -37,17 +37,17 @@ Accounts.registerLoginHandler(function (options) {
     // seems unlikely.
     //
     // XXX we want `type` to be the service name such as "facebook"
-    return { type: "oauth",
-             error: new Meteor.Error(
-               Accounts.LoginCancelledError.numericError,
-               "No matching login attempt found when running OAuth.retreiveCredential().") };
-  }
+    // return { type: "oauth",
+    //          error: new Meteor.Error(
+    //            Accounts.LoginCancelledError.numericError,
+    //            "No matching login attempt found when running OAuth.retreiveCredential().") };
 
-  if (result instanceof Error)
+    console.log('S21.3 No matching login attempt found when running OAuth.retreiveCredential().  Trying to skip...')
+  } else if (result instanceof Error) {
     // We tried to login, but there was a fatal error. Report it back
     // to the user.
     throw result;
-  else {
+  } else if(result) {
     if (!_.contains(Accounts.oauth.serviceNames(), result.serviceName)) {
       // serviceName was not found in the registered services list.
       // This could happen because the service never registered itself or
@@ -55,11 +55,9 @@ Accounts.registerLoginHandler(function (options) {
       return { type: "oauth",
                error: new Meteor.Error(
                  Accounts.LoginCancelledError.numericError,
-                 "No registered oauth service found for: " + result.serviceName) };
+                 "S21.4 No registered oauth service found for: " + result.serviceName) };
 
     }
-    if(result){
-      return Accounts.updateOrCreateUserFromExternalService(result.serviceName, result.serviceData, result.options);
-    } 
+    return Accounts.updateOrCreateUserFromExternalService(result.serviceName, result.serviceData, result.options);
   }
 });

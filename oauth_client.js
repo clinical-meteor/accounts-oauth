@@ -49,7 +49,7 @@ Meteor.startup(function () {
   var methodArguments = [{oauth: _.pick(oauth, 'credentialToken', 'credentialSecret')}];
 
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('OAuth._loginStyle', service, config, options)
+    console.log('Meteor.startup()')
   }  
 
   var newLoginMethod = {
@@ -83,7 +83,7 @@ Meteor.startup(function () {
 // nothing should happen.
 Accounts.oauth.tryLoginAfterPopupClosed = function(credentialToken, callback) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('Accounts.oauth.tryLoginAfterPopupClosed', credentialToken)
+    console.log('C9.     Trying login now that the popup is closed.', credentialToken)
   }   
   
   var credentialSecret = OAuth._retrieveCredentialSecret(credentialToken) || null;
@@ -99,7 +99,7 @@ Accounts.oauth.tryLoginAfterPopupClosed = function(credentialToken, callback) {
 
 Accounts.oauth.credentialRequestCompleteHandler = function(callback) {
   if(get(Meteor, 'settings.public.logging') === "debug"){
-    console.log('Accounts.oauth.credentialRequestCompleteHandler')
+    console.log('C4.     Attempting to handle credetial request completion.')
   }   
 
   return function (credentialTokenOrError) {
