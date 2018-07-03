@@ -118,7 +118,7 @@ jobs:
     - run: cd ../baseline && meteor add dispatch:mocha practicalmeteor:chai
     - run: cd ../baseline && meteor add clinical:default-landing-page 
     - run: cd ../baseline && mkdir imports 
-    - run: cp tests/LandingPage.tests.js ../baseline/imports/
+    - run: cp tests/Accounts.oauth.tests.js ../baseline/imports/
 
 
     #- run the app
