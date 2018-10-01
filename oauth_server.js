@@ -9,7 +9,7 @@ Accounts.registerLoginHandler(function (options) {
     return undefined; // don't handle
 
   check(options.oauth, {
-    credentialToken: String,
+    credentialToken: Match.OneOf(null, String),
     // When an error occurs while retrieving the access token, we store
     // the error in the pending credentials table, with a secret of
     // null. The client can call the login method with a secret of null
