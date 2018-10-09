@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Common code for OAuth-based login services in clinical environments.",
-  version: "1.1.51",
+  version: "1.1.52",
   name: 'clinical:accounts-oauth',
   git: 'https://github.com/clinical-meteor/accounts-oauth'
 });
